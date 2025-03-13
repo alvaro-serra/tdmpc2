@@ -8,11 +8,11 @@
 # docker push <user>/tdmpc2:1.0.0        #
 # -------------------------------------- #
 # Run:                                   #
- docker run -i \
-   -v <path>/<to>/tdmpc2:/tdmpc2 \
-   --gpus all \
-   -t <user>/tdmpc2:1.0.0 \
-   /bin/bash
+# docker run -i \
+#   -v <path>/<to>/tdmpc2:/tdmpc2 \
+#   --gpus all \
+#   -t <user>/tdmpc2:1.0.0 \
+#   /bin/bash
 ##########################################
 
 # base image
