@@ -8,11 +8,11 @@
 # docker push <user>/tdmpc2:1.0.0        #
 # -------------------------------------- #
 # Run:                                   #
-# docker run -i \                        #
-#   -v <path>/<to>/tdmpc2:/tdmpc2 \      #
-#   --gpus all \                         #
-#   -t <user>/tdmpc2:1.0.0 \             #
-#   /bin/bash                            #
+ docker run -i \
+   -v <path>/<to>/tdmpc2:/tdmpc2 \
+   --gpus all \
+   -t <user>/tdmpc2:1.0.0 \
+   /bin/bash
 ##########################################
 
 # base image
@@ -46,6 +46,15 @@ RUN echo "cd /root" >> /root/.bashrc
 # mujoco 2.1.0
 ENV MUJOCO_GL egl
 ENV LD_LIBRARY_PATH /root/.mujoco/mujoco210/bin:${LD_LIBRARY_PATH}
+#RUN mkdir -p /root/.mujoco && \
+#    wget https://www.tdmpc2.com/files/mjkey.txt && \
+#    wget https://github.com/deepmind/mujoco/releases/download/2.1.0/mujoco210-linux-x86_64.tar.gz && \
+#    tar -xzf mujoco210-linux-x86_64.tar.gz && \
+#    rm mujoco210-linux-x86_64.tar.gz && \
+#    mv mujoco210 /root/.mujoco/mujoco210 && \
+#    mv mjkey.txt /root/.mujoco/mjkey.txt && \
+#    find /root/.mujoco -uid 421709 -exec chown root:root {} \; && \
+#    python -c "import mujoco_py"
 RUN mkdir -p /root/.mujoco && \
     wget https://www.tdmpc2.com/files/mjkey.txt && \
     wget https://github.com/deepmind/mujoco/releases/download/2.1.0/mujoco210-linux-x86_64.tar.gz && \
@@ -54,10 +63,14 @@ RUN mkdir -p /root/.mujoco && \
     mv mujoco210 /root/.mujoco/mujoco210 && \
     mv mjkey.txt /root/.mujoco/mjkey.txt && \
     find /root/.mujoco -uid 421709 -exec chown root:root {} \; && \
+    pip install Cython==0.29.37 && \
+    pip install mujoco-py && \
     python -c "import mujoco_py"
 
 # gym
-RUN pip install gym==0.21.0
+#RUN pip install gym==0.21.0
+RUN  pip install setuptools==65.5.0 pip==21.0 && \
+     pip install gym==0.21.0
 
 # metaworld
 RUN pip install git+https://github.com/Farama-Foundation/Metaworld.git@04be337a12305e393c0caf0cbf5ec7755c7c8feb
