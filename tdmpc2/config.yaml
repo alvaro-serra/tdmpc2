@@ -88,4 +88,4 @@ seed_steps: ???
 bin_size: ???
 
 # speedups
-compile: False
+compile: True
